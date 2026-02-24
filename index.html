@@ -113,6 +113,35 @@
             color: var(--text-primary);
             font-size: 14px;
         }
+        .datum-rad {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .datum-rad input {
+            flex: 1;
+        }
+        .idag-knapp {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background-color 0.3s;
+        }
+        .idag-knapp:hover {
+            background-color: #5a6268;
+        }
+        body.morkt-lage .idag-knapp {
+            background-color: #495057;
+        }
+        body.morkt-lage .idag-knapp:hover {
+            background-color: #343a40;
+        }
         input, select {
             width: 100%;
             padding: 10px;
@@ -359,8 +388,11 @@
                 
                 <div class="inputgrupp">
                     <label for="tabletterDatum">📅 Hämtningsdatum:</label>
-                    <input type="date" id="tabletterDatum">
-                    <div class="datum-info">Klicka i fältet för att välja datum</div>
+                    <div class="datum-rad">
+                        <input type="date" id="tabletterDatum">
+                        <button class="idag-knapp" onclick="sattTillIdag('tabletterDatum')">Idag</button>
+                    </div>
+                    <div class="datum-info">Klicka i fältet eller tryck på Idag</div>
                 </div>
                 
                 <button onclick="beraknaTabletter()">Beräkna nästa datum →</button>
@@ -400,8 +432,11 @@
                 
                 <div class="inputgrupp">
                     <label for="vatskaDatum">📅 Hämtningsdatum:</label>
-                    <input type="date" id="vatskaDatum">
-                    <div class="datum-info">Klicka i fältet för att välja datum</div>
+                    <div class="datum-rad">
+                        <input type="date" id="vatskaDatum">
+                        <button class="idag-knapp" onclick="sattTillIdag('vatskaDatum')">Idag</button>
+                    </div>
+                    <div class="datum-info">Klicka i fältet eller tryck på Idag</div>
                 </div>
                 
                 <button onclick="beraknaVatska()">Beräkna nästa datum →</button>
@@ -421,7 +456,11 @@
                 
                 <div class="inputgrupp">
                     <label for="intervallStartDatum">📅 Startdatum:</label>
-                    <input type="date" id="intervallStartDatum">
+                    <div class="datum-rad">
+                        <input type="date" id="intervallStartDatum">
+                        <button class="idag-knapp" onclick="sattTillIdag('intervallStartDatum')">Idag</button>
+                    </div>
+                    <div class="datum-info">Klicka i fältet eller tryck på Idag</div>
                 </div>
                 
                 <div class="inputgrupp">
@@ -553,9 +592,22 @@
             }
         }
 
+        // NY FUNKTION: Sätt datum till idag
+        function sattTillIdag(faltId) {
+            const idag = new Date();
+            const ar = idag.getFullYear();
+            const manad = (idag.getMonth() + 1).toString().padStart(2, '0');
+            const dag = idag.getDate().toString().padStart(2, '0');
+            const datumString = `${ar}-${manad}-${dag}`;
+            
+            document.getElementById(faltId).value = datumString;
+        }
+
         // Initiera vid sidladdning
         window.onload = function() {
-            sattDagensDatum();
+            sattTillIdag('tabletterDatum');
+            sattTillIdag('vatskaDatum');
+            sattTillIdag('intervallStartDatum');
             uppdateraEnheterDisplay();
             uppdateraIntervallInput();
             uppdateraInsulinInfo();
@@ -565,19 +617,6 @@
             document.getElementById('hundraInsulinVolym').addEventListener('input', uppdateraInsulinInfo);
             document.getElementById('hundraInsulinStyrka').addEventListener('input', uppdateraInsulinInfo);
         };
-
-        // Sätt dagens datum
-        function sattDagensDatum() {
-            const idag = new Date();
-            const ar = idag.getFullYear();
-            const manad = (idag.getMonth() + 1).toString().padStart(2, '0');
-            const dag = idag.getDate().toString().padStart(2, '0');
-            const datumString = `${ar}-${manad}-${dag}`;
-            
-            document.getElementById('tabletterDatum').value = datumString;
-            document.getElementById('vatskaDatum').value = datumString;
-            document.getElementById('intervallStartDatum').value = datumString;
-        }
 
         // Uppdatera enheter display
         function uppdateraEnheterDisplay() {
