@@ -24,6 +24,9 @@
             --status-rod-text: #721c24;
             --status-rod-border: #f5c6cb;
             --hover-opacity: 0.9;
+            /* Nya ljusare blå färger */
+            --tablett-farg: #4a9eff;
+            --tablett-mork: #2c7be5;
         }
 
         /* Mörkt läge */
@@ -71,7 +74,7 @@
             text-align: center;
         }
         body.morkt-lage h1 {
-            color: #4a9eff;
+            color: var(--tablett-farg);
         }
         .kolumner {
             display: flex;
@@ -86,7 +89,6 @@
             border: 1px solid var(--border-color);
         }
         .kolumn h2 {
-            color: #003b5c;
             font-size: 20px;
             margin-top: 0;
             margin-bottom: 20px;
@@ -96,12 +98,19 @@
             align-items: center;
             gap: 8px;
         }
-        body.morkt-lage .kolumn h2 {
-            color: #4a9eff;
+        /* Uppdaterade färger - ljusare blå för första kolumnen */
+        .kolumn:first-child h2 { 
+            color: var(--tablett-farg);
+            border-bottom-color: var(--tablett-farg);
         }
-        .kolumn:first-child h2 { border-bottom-color: #003b5c; }
-        .kolumn:nth-child(2) h2 { border-bottom-color: #2c7a4d; }
-        .kolumn:nth-child(3) h2 { border-bottom-color: #b85c00; }
+        .kolumn:nth-child(2) h2 { 
+            color: #2c7a4d;
+            border-bottom-color: #2c7a4d;
+        }
+        .kolumn:nth-child(3) h2 { 
+            color: #b85c00;
+            border-bottom-color: #b85c00;
+        }
         
         .inputgrupp {
             margin-bottom: 20px;
@@ -153,7 +162,7 @@
             color: var(--text-primary);
         }
         input:focus, select:focus {
-            outline: 2px solid #003b5c;
+            outline: 2px solid var(--tablett-farg);
             border-color: transparent;
         }
         input[type="date"] {
@@ -166,14 +175,26 @@
             color: var(--text-primary);
         }
         input[type="date"]::-webkit-calendar-picker-indicator {
-            background-color: #003b5c;
+            background-color: var(--tablett-farg);
             padding: 5px;
             border-radius: 3px;
             cursor: pointer;
             filter: invert(1);
         }
+        /* Knappfärger */
+        .kolumn:first-child button { 
+            background-color: var(--tablett-farg);
+        }
+        .kolumn:first-child button:hover {
+            background-color: var(--tablett-mork);
+        }
+        .kolumn:nth-child(2) button { 
+            background-color: #2c7a4d;
+        }
+        .kolumn:nth-child(3) button { 
+            background-color: #b85c00;
+        }
         button {
-            background-color: #003b5c;
             color: white;
             border: none;
             padding: 12px 20px;
@@ -185,8 +206,6 @@
             transition: background-color 0.3s;
             margin-top: 10px;
         }
-        .kolumn:nth-child(2) button { background-color: #2c7a4d; }
-        .kolumn:nth-child(3) button { background-color: #b85c00; }
         button:hover { opacity: var(--hover-opacity); }
         
         .resultat {
@@ -197,7 +216,7 @@
             border-left: 5px solid;
             display: none;
         }
-        .kolumn:first-child .resultat { border-left-color: #003b5c; }
+        .kolumn:first-child .resultat { border-left-color: var(--tablett-farg); }
         .kolumn:nth-child(2) .resultat { border-left-color: #2c7a4d; }
         .kolumn:nth-child(3) .resultat { border-left-color: #b85c00; }
         .resultat.visa { display: block; }
@@ -209,7 +228,7 @@
             border-bottom: 1px dashed;
             color: var(--text-primary);
         }
-        .kolumn:first-child .resultat-dagar { border-bottom-color: #003b5c; }
+        .kolumn:first-child .resultat-dagar { border-bottom-color: var(--tablett-farg); }
         .kolumn:nth-child(2) .resultat-dagar { border-bottom-color: #2c7a4d; }
         .kolumn:nth-child(3) .resultat-dagar { border-bottom-color: #b85c00; }
         
@@ -223,9 +242,18 @@
             border: 2px solid;
             margin: 8px 0;
         }
-        .kolumn:first-child .resultat-datum-box { color: #003b5c; border-color: #003b5c; }
-        .kolumn:nth-child(2) .resultat-datum-box { color: #2c7a4d; border-color: #2c7a4d; }
-        .kolumn:nth-child(3) .resultat-datum-box { color: #b85c00; border-color: #b85c00; }
+        .kolumn:first-child .resultat-datum-box { 
+            color: var(--tablett-farg); 
+            border-color: var(--tablett-farg); 
+        }
+        .kolumn:nth-child(2) .resultat-datum-box { 
+            color: #2c7a4d; 
+            border-color: #2c7a4d; 
+        }
+        .kolumn:nth-child(3) .resultat-datum-box { 
+            color: #b85c00; 
+            border-color: #b85c00; 
+        }
         
         .status-meddelande {
             padding: 10px;
@@ -350,7 +378,7 @@
             top: 20px;
             right: 20px;
             background-color: var(--container-bg);
-            border: 2px solid #003b5c;
+            border: 2px solid var(--tablett-farg);
             border-radius: 30px;
             padding: 8px 15px;
             cursor: pointer;
@@ -592,7 +620,7 @@
             }
         }
 
-        // NY FUNKTION: Sätt datum till idag
+        // Sätt datum till idag
         function sattTillIdag(faltId) {
             const idag = new Date();
             const ar = idag.getFullYear();
@@ -680,7 +708,7 @@
             }
         }
 
-        // Formatera datum (utan tidszonskorrigering)
+        // Formatera datum
         function formatDate(date) {
             return date.toLocaleDateString('sv-SE', {
                 year: 'numeric',
@@ -689,8 +717,7 @@
             });
         }
 
-        // BERÄKNINGAR
-        
+        // BERÄKNINGAR (samma som förut)
         function beraknaTabletter() {
             const storlek = parseFloat(document.getElementById('tabletterStorlek').value);
             const dygnsdos = parseFloat(document.getElementById('tabletterDygnsdos').value);
@@ -701,7 +728,6 @@
                 return;
             }
             
-            // Skapa datum utan tidszonsproblem
             const datumDelar = datumStr.split('-');
             const startDatum = new Date(datumDelar[0], datumDelar[1] - 1, datumDelar[2]);
             
@@ -715,7 +741,942 @@
                 `${Math.ceil(dagar * 10) / 10} dagar (2/3 av tiden)`;
             document.getElementById('tabletterDatumBox').textContent = formatDate(nastaDatum);
             
-            // Status för förmån
+            const statusDiv = document.getElementById('tabletterStatus');
+            statusDiv.className = 'status-meddelande';
+            
+            if (nastaDatum <= idag) {
+                statusDiv.classList.add('status-gron');
+                statusDiv.innerHTML = '✅ OK inom förmån';
+            } else {
+                statusDiv.classList.add('status-rod');
+                statusDiv.innerHTML = '❌ För tidigt inom förmån';
+            }
+            
+            document.getElementById('tabletterInfo').textContent = 
+                `${storlek} tabletter, ${dygnsdos} st/dag`;
+            document.getElementById('tabletterIdag').innerHTML = 
+                `Hämtades: ${formatDate(startDatum)}<br>Idag: ${formatDate(idag)}`;
+            
+            document.getElementById('resultatTabletter').classList.add('visa');
+        }
+
+        function beraknaVatska() {
+            const volym = parseFloat(document.getElementById('vatskaVolym').value);
+            const styrka = parseFloat(document.getElementById('vatskaStyrka').value);
+            const dygnsdos = parseFloat(document.getElementById('vatskaDygnsdos').value);
+            const datumStr = document.getElementById('vatskaDatum').value;
+            
+            if (!volym || !styrka || !dygnsdos) {
+                alert('Fyll i alla värden, inklusive dygnsdos i enheter');
+                return;
+            }
+            
+            const datumDelar = datumStr.split('-');
+            const startDatum = new Date(datumDelar[0], datumDelar[1] - 1, datumDelar[2]);
+            
+            const totalaEnheter = volym * styrka;
+            const dagar = totalaEnheter / dygnsdos * 0.67;
+            const nastaDatum = new Date(startDatum);
+            nastaDatum.setDate(startDatum.getDate() + Math.floor(dagar));
+            
+            const idag = new Date();
+            
+            document.getElementById('vatskaDagar').textContent = 
+                `${Math.ceil(dagar * 10) / 10} dagar (2/3 av tiden)`;
+            document.getElementById('vatskaDatumBox').textContent = formatDate(nastaDatum);
+            
+            const statusDiv = document.getElementById('vatskaStatus');
+            statusDiv.className = 'status-meddelande';
+            
+            if (nastaDatum <= idag) {
+                statusDiv.classList.add('status-gron');
+                statusDiv.innerHTML = '✅ OK inom förmån';
+            } else {
+                statusDiv.classList.add('status-rod');
+                statusDiv.innerHTML = '❌ För tidigt inom förmån';
+            }
+            
+            document.getElementById('vatskaInfo').textContent = 
+                `${totalaEnheter.toFixed(0)} E totalt, ${dygnsdos} E/dag`;
+            document.getElementById('vatskaIdag').innerHTML = 
+                `Hämtades: ${formatDate(startDatum)}<br>Idag: ${formatDate(idag)}`;
+            
+            document.getElementById('resultatVatska').classList.add('visa');
+        }
+
+        function beraknaIntervall() {
+            const startDatumStr = document.getElementById('intervallStartDatum').value;
+            const typ = document.getElementById('intervallTyp').value;
+            
+            let antal;
+            if (typ === 'dagar') {
+                antal = parseInt(document.getElementById('intervallVarde').value);
+            } else if (typ === 'veckor') {
+                antal = parseInt(document.getElementById('intervallVeckor').value);
+            } else {
+                antal = parseInt(document.getElementById('intervallManader').value);
+            }
+            
+            const datumDelar = startDatumStr.split('-');
+            const startDatum = new Date(datumDelar[0], datumDelar[1] - 1, datumDelar[2]);
+            
+            const nastaDatum = new Date(startDatum);
+            if (typ === 'dagar') {
+                nastaDatum.setDate(startDatum.getDate() + antal);
+            } else if (typ === 'veckor') {
+                nastaDatum.setDate(startDatum.getDate() + (antal * 7));
+            } else {
+                nastaDatum.setMonth(startDatum.getMonth() + antal);
+            }
+            
+            const idag = new Date();
+            const intervallText = typ === 'dagar' ? `${antal} dagar` : 
+                                 typ === 'veckor' ? `${antal} veckor` : `${antal} månader`;
+            
+            document.getElementById('intervallDagar').textContent = `Intervall: ${intervallText}`;
+            document.getElementById('intervallDatumBox').textContent = formatDate(nastaDatum);
+            
+            const statusDiv = document.getElementById('intervallStatus');
+            statusDiv.className = 'status-meddelande';
+            
+            if (nastaDatum <= idag) {
+                statusDiv.classList.add('status-gron');
+                statusDiv.innerHTML = '✅ OK inom expeditionsintervall';
+            } else {
+                statusDiv.classList.add('status-rod');
+                statusDiv.innerHTML = '❌ För tidigt inom expeditionsintervall';
+            }
+            
+            document.getElementById('intervallInfo').textContent = `Från ${formatDate(startDatum)}`;
+            document.getElementById('intervallIdag').innerHTML = 
+                `Start: ${formatDate(startDatum)}<br>Idag: ${formatDate(idag)}`;
+            
+            document.getElementById('resultatIntervall').classList.add('visa');
+        }
+
+        // 100-dagarsberäkningar
+        function beraknaHundraTabletter() {
+            const perForp = parseFloat(document.getElementById('hundraTabletterAntal').value);
+            const dygnsdos = parseFloat(document.getElementById('hundraTabletterDos').value);
+            const bestallda = parseInt(document.getElementById('hundraTabletterBestallda').value);
+            
+            if (!perForp || !dygnsdos || !bestallda) {
+                alert('Fyll i alla fält');
+                return;
+            }
+            
+            const dagarPerForp = perForp / dygnsdos;
+            const totalaDagar = dagarPerForp * bestallda;
+            const maxForp = Math.floor(100 / dagarPerForp);
+            
+            let resultatDiv = document.getElementById('resultatHundra');
+            let rekommendationDiv = document.getElementById('hundraRekommendation');
+            let detaljerDiv = document.getElementById('hundraDetaljer');
+            
+            rekommendationDiv.className = 'rekommendation';
+            
+            if (totalaDagar <= 100) {
+                rekommendationDiv.classList.add('gron');
+                rekommendationDiv.innerHTML = `✅ OK! ${bestallda} förpackning${bestallda > 1 ? 'ar' : ''} = ${totalaDagar.toFixed(1)} dagar`;
+                detaljerDiv.innerHTML = `Kan expediera alla ${bestallda} förpackning${bestallda > 1 ? 'ar' : ''} (under 100 dagar)`;
+            } else {
+                rekommendationDiv.classList.add('rod');
+                rekommendationDiv.innerHTML = `⚠️ OBS! ${bestallda} förpackning${bestallda > 1 ? 'ar' : ''} = ${totalaDagar.toFixed(1)} dagar`;
+                
+                if (maxForp === 0) {
+                    detaljerDiv.innerHTML = `En förpackning ger redan ${dagarPerForp.toFixed(1)} dagar. Kontrollera doseringen!`;
+                } else {
+                    detaljerDiv.innerHTML = `Rekommendation: Expediera ${maxForp} förpackning${maxForp > 1 ? 'ar' : ''} (${(maxForp * dagarPerForp).toFixed(1)} dagar)`;
+                }
+            }
+            
+            resultatDiv.style.display = 'block';
+        }
+
+        function beraknaHundraInsulin() {
+            const volym = parseFloat(document.getElementById('hundraInsulinVolym').value);
+            const styrka = parseFloat(document.getElementById('hundraInsulinStyrka').value);
+            const bestallda = parseInt(document.getElementById('hundraInsulinBestallda').value);
+            const dygnsdos = parseFloat(document.getElementById('hundraInsulinDos').value);
+            
+            if (!volym || !styrka || !bestallda || !dygnsdos) {
+                alert('Fyll i alla fält, inklusive dygnsdos i enheter');
+                return;
+            }
+            
+            const enheterPerForp = volym * styrka;
+            const dagarPerForp = enheterPerForp / dygnsdos;
+            const totalaDagar = dagarPerForp * bestallda;
+            const maxForp = Math.floor(100 / dagarPerForp);
+            
+            let resultatDiv = document.getElementById('resultatHundra');
+            let rekommendationDiv = document.getElementById('hundraRekommendation');
+            let detaljerDiv = document.getElementById('hundraDetaljer');
+            
+            rekommendationDiv.className = 'rekommendation';
+            
+            if (totalaDagar <= 100) {
+                rekommendationDiv.classList.add('gron');
+                rekommendationDiv.innerHTML = `✅ OK! ${bestallda} förpackning${bestallda > 1 ? 'ar' : ''} = ${totalaDagar.toFixed(1)} dagar`;
+                detaljerDiv.innerHTML = `Kan expediera alla ${bestallda} förpackning${bestallda > 1 ? 'ar' : ''} (under 100 dagar)`;
+            } else {
+                rekommendationDiv.classList.add('rod');
+                rekommendationDiv.innerHTML = `⚠️ OBS! ${bestallda} förpackning${bestallda > 1 ? 'ar' : ''} = ${totalaDagar.toFixed(1)} dagar`;
+                
+                if (maxForp === 0) {
+                    detaljerDiv.innerHTML = `En förpackning ger redan ${dagarPerForp.toFixed(1)} dagar. Kontrollera doseringen!`;
+                } else {
+                    detaljerDiv.innerHTML = `Rekommendation: Expediera ${maxForp} förpackning${maxForp > 1 ? 'ar' : ''} (${(maxForp * dagarPerForp).toFixed(1)} dagar)`;
+                }
+            }
+            
+            resultatDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2/3 av tiden & 100-dagarsregeln - Farmaceutverktyg</title>
+    <style>
+        /* Ljust läge (default) */
+        :root {
+            --bg-color: #f5f5f5;
+            --container-bg: white;
+            --kolumn-bg: #f8f9fa;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --border-color: #e0e0e0;
+            --input-bg: white;
+            --input-border: #ccc;
+            --info-bg: #e9ecef;
+            --info-text: #495057;
+            --status-gron-bg: #d4edda;
+            --status-gron-text: #155724;
+            --status-gron-border: #c3e6cb;
+            --status-rod-bg: #f8d7da;
+            --status-rod-text: #721c24;
+            --status-rod-border: #f5c6cb;
+            --hover-opacity: 0.9;
+            /* Nya ljusare blå färger */
+            --tablett-farg: #4a9eff;
+            --tablett-mork: #2c7be5;
+        }
+
+        /* Mörkt läge */
+        body.morkt-lage {
+            --bg-color: #1a1a1a;
+            --container-bg: #2d2d2d;
+            --kolumn-bg: #3d3d3d;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --border-color: #404040;
+            --input-bg: #4d4d4d;
+            --input-border: #666;
+            --info-bg: #404040;
+            --info-text: #d0d0d0;
+            --status-gron-bg: #1e3a2a;
+            --status-gron-text: #a8e0b5;
+            --status-gron-border: #2a5a3a;
+            --status-rod-bg: #4a2a2a;
+            --status-rod-text: #f0b0b0;
+            --status-rod-border: #6a3a3a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .container {
+            background-color: var(--container-bg);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #003b5c;
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        body.morkt-lage h1 {
+            color: var(--tablett-farg);
+        }
+        .kolumner {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .kolumn {
+            flex: 1;
+            background-color: var(--kolumn-bg);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+        }
+        .kolumn h2 {
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        /* Uppdaterade färger - ljusare blå för första kolumnen */
+        .kolumn:first-child h2 { 
+            color: var(--tablett-farg);
+            border-bottom-color: var(--tablett-farg);
+        }
+        .kolumn:nth-child(2) h2 { 
+            color: #2c7a4d;
+            border-bottom-color: #2c7a4d;
+        }
+        .kolumn:nth-child(3) h2 { 
+            color: #b85c00;
+            border-bottom-color: #b85c00;
+        }
+        
+        .inputgrupp {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+        .datum-rad {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .datum-rad input {
+            flex: 1;
+        }
+        .idag-knapp {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background-color 0.3s;
+        }
+        .idag-knapp:hover {
+            background-color: #5a6268;
+        }
+        body.morkt-lage .idag-knapp {
+            background-color: #495057;
+        }
+        body.morkt-lage .idag-knapp:hover {
+            background-color: #343a40;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--input-border);
+            border-radius: 5px;
+            font-size: 15px;
+            box-sizing: border-box;
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+        }
+        input:focus, select:focus {
+            outline: 2px solid var(--tablett-farg);
+            border-color: transparent;
+        }
+        input[type="date"] {
+            font-family: inherit;
+            padding: 10px;
+            border: 1px solid var(--input-border);
+            border-radius: 5px;
+            font-size: 15px;
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            background-color: var(--tablett-farg);
+            padding: 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            filter: invert(1);
+        }
+        /* Knappfärger */
+        .kolumn:first-child button { 
+            background-color: var(--tablett-farg);
+        }
+        .kolumn:first-child button:hover {
+            background-color: var(--tablett-mork);
+        }
+        .kolumn:nth-child(2) button { 
+            background-color: #2c7a4d;
+        }
+        .kolumn:nth-child(3) button { 
+            background-color: #b85c00;
+        }
+        button {
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        button:hover { opacity: var(--hover-opacity); }
+        
+        .resultat {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--info-bg);
+            border-radius: 5px;
+            border-left: 5px solid;
+            display: none;
+        }
+        .kolumn:first-child .resultat { border-left-color: var(--tablett-farg); }
+        .kolumn:nth-child(2) .resultat { border-left-color: #2c7a4d; }
+        .kolumn:nth-child(3) .resultat { border-left-color: #b85c00; }
+        .resultat.visa { display: block; }
+        
+        .resultat-dagar {
+            font-size: 16px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed;
+            color: var(--text-primary);
+        }
+        .kolumn:first-child .resultat-dagar { border-bottom-color: var(--tablett-farg); }
+        .kolumn:nth-child(2) .resultat-dagar { border-bottom-color: #2c7a4d; }
+        .kolumn:nth-child(3) .resultat-dagar { border-bottom-color: #b85c00; }
+        
+        .resultat-datum-box {
+            background-color: var(--container-bg);
+            padding: 12px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            border: 2px solid;
+            margin: 8px 0;
+        }
+        .kolumn:first-child .resultat-datum-box { 
+            color: var(--tablett-farg); 
+            border-color: var(--tablett-farg); 
+        }
+        .kolumn:nth-child(2) .resultat-datum-box { 
+            color: #2c7a4d; 
+            border-color: #2c7a4d; 
+        }
+        .kolumn:nth-child(3) .resultat-datum-box { 
+            color: #b85c00; 
+            border-color: #b85c00; 
+        }
+        
+        .status-meddelande {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+            text-align: center;
+            font-size: 15px;
+        }
+        .status-gron {
+            background-color: var(--status-gron-bg);
+            color: var(--status-gron-text);
+            border: 1px solid var(--status-gron-border);
+        }
+        .status-rod {
+            background-color: var(--status-rod-bg);
+            color: var(--status-rod-text);
+            border: 1px solid var(--status-rod-border);
+        }
+        
+        .forpackning {
+            font-size: 13px;
+            margin-top: 8px;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        .dag-idag {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 8px;
+        }
+        .enheter-info {
+            background-color: var(--info-bg);
+            padding: 8px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-size: 14px;
+            text-align: center;
+            color: var(--info-text);
+        }
+        .datum-info {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+            font-style: italic;
+        }
+        .intervall-valjare {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .intervall-valjare select { flex: 1; }
+        .intervall-valjare input { flex: 2; }
+        
+        /* 100-dagarssektionen */
+        .hundra-sektion {
+            margin-top: 30px;
+            padding: 25px;
+            background-color: var(--kolumn-bg);
+            border-radius: 10px;
+            border: 2px solid #9c27b0;
+        }
+        .hundra-sektion h2 {
+            color: #9c27b0;
+            font-size: 22px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .hundra-valjare {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .hundra-valjare button {
+            flex: 1;
+            background-color: #9c27b0;
+            padding: 12px;
+            font-size: 16px;
+        }
+        .hundra-valjare button.aktiv {
+            background-color: #6a1b7a;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .hundra-kolumn {
+            display: none;
+        }
+        .hundra-kolumn.aktiv {
+            display: block;
+        }
+        .rekommendation {
+            background-color: var(--status-gron-bg);
+            border: 1px solid var(--status-gron-border);
+            color: var(--status-gron-text);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-weight: bold;
+            text-align: center;
+            font-size: 16px;
+        }
+        .rekommendation.rod {
+            background-color: var(--status-rod-bg);
+            border-color: var(--status-rod-border);
+            color: var(--status-rod-text);
+        }
+        .info-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-top: 3px;
+        }
+        
+        /* Toggle-knapp för mörkt läge */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--container-bg);
+            border: 2px solid var(--tablett-farg);
+            border-radius: 30px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--text-primary);
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .theme-toggle:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-toggle" onclick="toggleMorktLage()">🌙 Mörkt läge</div>
+
+    <div class="container">
+        <h1>💊 Läkemedelsberäkning - 2/3-regeln & 100-dagarsregeln</h1>
+        
+        <!-- De tre kolumnerna -->
+        <div class="kolumner">
+            <!-- Kolumn 1: Tabletter/kapslar -->
+            <div class="kolumn">
+                <h2>💊 Tabletter & kapslar</h2>
+                
+                <div class="inputgrupp">
+                    <label for="tabletterStorlek">Förpackningsstorlek (antal):</label>
+                    <input type="number" id="tabletterStorlek" min="1" value="100" step="1">
+                </div>
+                
+                <div class="inputgrupp">
+                    <label for="tabletterDygnsdos">Dygnsdos (antal tabletter):</label>
+                    <input type="number" id="tabletterDygnsdos" min="0.1" value="1" step="0.1">
+                </div>
+                
+                <div class="inputgrupp">
+                    <label for="tabletterDatum">📅 Hämtningsdatum:</label>
+                    <div class="datum-rad">
+                        <input type="date" id="tabletterDatum">
+                        <button class="idag-knapp" onclick="sattTillIdag('tabletterDatum')">Idag</button>
+                    </div>
+                    <div class="datum-info">Klicka i fältet eller tryck på Idag</div>
+                </div>
+                
+                <button onclick="beraknaTabletter()">Beräkna nästa datum →</button>
+                
+                <div id="resultatTabletter" class="resultat">
+                    <div id="tabletterDagar" class="resultat-dagar"></div>
+                    <div id="tabletterDatumBox" class="resultat-datum-box"></div>
+                    <div id="tabletterStatus" class="status-meddelande"></div>
+                    <div id="tabletterInfo" class="forpackning"></div>
+                    <div id="tabletterIdag" class="dag-idag"></div>
+                </div>
+            </div>
+            
+            <!-- Kolumn 2: Vätska/insulin -->
+            <div class="kolumn">
+                <h2>💉 Vätska & insulin</h2>
+                
+                <div class="inputgrupp">
+                    <label for="vatskaVolym">Volym (ml):</label>
+                    <input type="number" id="vatskaVolym" min="0.1" value="15" step="0.1">
+                </div>
+                
+                <div class="inputgrupp">
+                    <label for="vatskaStyrka">Styrka (E/ml):</label>
+                    <input type="number" id="vatskaStyrka" min="0.1" value="100" step="0.1">
+                </div>
+                
+                <div class="enheter-info" id="vatskaEnheterDisplay">
+                    Totala enheter: 1500 E
+                </div>
+                
+                <div class="inputgrupp">
+                    <label for="vatskaDygnsdos">Dygnsdos (enheter):</label>
+                    <input type="number" id="vatskaDygnsdos" min="0.1" value="" step="0.1" placeholder="Ange dygnsdos">
+                    <div class="info-text">Fyll i patientens dygnsdos i enheter</div>
+                </div>
+                
+                <div class="inputgrupp">
+                    <label for="vatskaDatum">📅 Hämtningsdatum:</label>
+                    <div class="datum-rad">
+                        <input type="date" id="vatskaDatum">
+                        <button class="idag-knapp" onclick="sattTillIdag('vatskaDatum')">Idag</button>
+                    </div>
+                    <div class="datum-info">Klicka i fältet eller tryck på Idag</div>
+                </div>
+                
+                <button onclick="beraknaVatska()">Beräkna nästa datum →</button>
+                
+                <div id="resultatVatska" class="resultat">
+                    <div id="vatskaDagar" class="resultat-dagar"></div>
+                    <div id="vatskaDatumBox" class="resultat-datum-box"></div>
+                    <div id="vatskaStatus" class="status-meddelande"></div>
+                    <div id="vatskaInfo" class="forpackning"></div>
+                    <div id="vatskaIdag" class="dag-idag"></div>
+                </div>
+            </div>
+            
+            <!-- Kolumn 3: Expeditionsintervall -->
+            <div class="kolumn">
+                <h2>⏱️ Expeditionsintervall</h2>
+                
+                <div class="inputgrupp">
+                    <label for="intervallStartDatum">📅 Startdatum:</label>
+                    <div class="datum-rad">
+                        <input type="date" id="intervallStartDatum">
+                        <button class="idag-knapp" onclick="sattTillIdag('intervallStartDatum')">Idag</button>
+                    </div>
+                    <div class="datum-info">Klicka i fältet eller tryck på Idag</div>
+                </div>
+                
+                <div class="inputgrupp">
+                    <label for="intervallTyp">Välj intervalltyp:</label>
+                    <select id="intervallTyp" onchange="uppdateraIntervallInput()">
+                        <option value="dagar" selected>Dagar</option>
+                        <option value="veckor">Veckor</option>
+                        <option value="manader">Månader</option>
+                    </select>
+                </div>
+                
+                <div class="inputgrupp" id="intervallInputContainer">
+                    <label for="intervallVarde">Ange antal:</label>
+                    <input type="number" id="intervallVarde" min="1" value="7" step="1">
+                </div>
+                
+                <div id="intervallVeckorContainer" class="inputgrupp" style="display: none;">
+                    <label for="intervallVeckor">Välj antal veckor:</label>
+                    <select id="intervallVeckor" onchange="synkroniseraVarde()">
+                        <option value="1">1 vecka</option>
+                        <option value="2" selected>2 veckor</option>
+                        <option value="3">3 veckor</option>
+                        <option value="4">4 veckor</option>
+                    </select>
+                </div>
+                
+                <div id="intervallManaderContainer" class="inputgrupp" style="display: none;">
+                    <label for="intervallManader">Välj antal månader:</label>
+                    <select id="intervallManader" onchange="synkroniseraVarde()">
+                        <option value="1">1 månad</option>
+                        <option value="2">2 månader</option>
+                        <option value="3">3 månader</option>
+                        <option value="6">6 månader</option>
+                    </select>
+                </div>
+                
+                <button onclick="beraknaIntervall()">Beräkna nästa datum →</button>
+                
+                <div id="resultatIntervall" class="resultat">
+                    <div id="intervallDagar" class="resultat-dagar"></div>
+                    <div id="intervallDatumBox" class="resultat-datum-box"></div>
+                    <div id="intervallStatus" class="status-meddelande"></div>
+                    <div id="intervallInfo" class="forpackning"></div>
+                    <div id="intervallIdag" class="dag-idag"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 100-dagarsregeln -->
+        <div class="hundra-sektion">
+            <h2>📏 100-dagarsregeln</h2>
+            <p style="margin-bottom: 20px; color: var(--text-secondary);">Räkna ut hur många förpackningar som får expedieras (max 100 dagars behandling)</p>
+            
+            <div class="hundra-valjare">
+                <button id="hundraTabTabletter" class="aktiv" onclick="visaHundraTab('tabletter')">💊 Tabletter</button>
+                <button id="hundraTabInsulin" onclick="visaHundraTab('insulin')">💉 Insulin</button>
+            </div>
+            
+            <!-- Tabletter -->
+            <div id="hundraTabletter" class="hundra-kolumn aktiv">
+                <div style="display: flex; gap: 20px;">
+                    <div style="flex: 1;">
+                        <div class="inputgrupp">
+                            <label>Tabletter per förpackning:</label>
+                            <input type="number" id="hundraTabletterAntal" min="1" value="100" step="1">
+                        </div>
+                        <div class="inputgrupp">
+                            <label>Dygnsdos (tabletter):</label>
+                            <input type="number" id="hundraTabletterDos" min="0.1" value="1" step="0.1">
+                        </div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div class="inputgrupp">
+                            <label>Beställda förpackningar:</label>
+                            <input type="number" id="hundraTabletterBestallda" min="1" value="1" step="1">
+                        </div>
+                        <button onclick="beraknaHundraTabletter()" style="background-color: #9c27b0; margin-top: 28px;">Beräkna →</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Insulin -->
+            <div id="hundraInsulin" class="hundra-kolumn">
+                <div style="display: flex; gap: 20px;">
+                    <div style="flex: 1;">
+                        <div class="inputgrupp">
+                            <label>Volym per förpackning (ml):</label>
+                            <input type="number" id="hundraInsulinVolym" min="0.1" value="15" step="0.1">
+                        </div>
+                        <div class="inputgrupp">
+                            <label>Styrka (E/ml):</label>
+                            <input type="number" id="hundraInsulinStyrka" min="0.1" value="100" step="0.1">
+                        </div>
+                        <div class="inputgrupp">
+                            <label>Dygnsdos (enheter):</label>
+                            <input type="number" id="hundraInsulinDos" min="0.1" value="" step="0.1" placeholder="Ange dygnsdos">
+                            <div class="info-text">Fyll i patientens dygnsdos i enheter</div>
+                        </div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div class="inputgrupp">
+                            <label>Beställda förpackningar:</label>
+                            <input type="number" id="hundraInsulinBestallda" min="1" value="1" step="1">
+                        </div>
+                        <div class="enheter-info" id="hundraInsulinInfo">
+                            En förpackning: 1500 E
+                        </div>
+                        <button onclick="beraknaHundraInsulin()" style="background-color: #b85c00;">Beräkna →</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="resultatHundra" style="margin-top: 25px; display: none;">
+                <div id="hundraRekommendation" class="rekommendation"></div>
+                <div id="hundraDetaljer" style="text-align: center; color: var(--text-secondary); margin-top: 10px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mörkt läge toggle
+        function toggleMorktLage() {
+            document.body.classList.toggle('morkt-lage');
+            const toggleBtn = document.querySelector('.theme-toggle');
+            if (document.body.classList.contains('morkt-lage')) {
+                toggleBtn.innerHTML = '☀️ Ljust läge';
+            } else {
+                toggleBtn.innerHTML = '🌙 Mörkt läge';
+            }
+        }
+
+        // Sätt datum till idag
+        function sattTillIdag(faltId) {
+            const idag = new Date();
+            const ar = idag.getFullYear();
+            const manad = (idag.getMonth() + 1).toString().padStart(2, '0');
+            const dag = idag.getDate().toString().padStart(2, '0');
+            const datumString = `${ar}-${manad}-${dag}`;
+            
+            document.getElementById(faltId).value = datumString;
+        }
+
+        // Initiera vid sidladdning
+        window.onload = function() {
+            sattTillIdag('tabletterDatum');
+            sattTillIdag('vatskaDatum');
+            sattTillIdag('intervallStartDatum');
+            uppdateraEnheterDisplay();
+            uppdateraIntervallInput();
+            uppdateraInsulinInfo();
+            
+            document.getElementById('vatskaVolym').addEventListener('input', uppdateraEnheterDisplay);
+            document.getElementById('vatskaStyrka').addEventListener('input', uppdateraEnheterDisplay);
+            document.getElementById('hundraInsulinVolym').addEventListener('input', uppdateraInsulinInfo);
+            document.getElementById('hundraInsulinStyrka').addEventListener('input', uppdateraInsulinInfo);
+        };
+
+        // Uppdatera enheter display
+        function uppdateraEnheterDisplay() {
+            const volym = parseFloat(document.getElementById('vatskaVolym').value) || 0;
+            const styrka = parseFloat(document.getElementById('vatskaStyrka').value) || 0;
+            const enheter = volym * styrka;
+            document.getElementById('vatskaEnheterDisplay').textContent = 
+                `Totala enheter: ${enheter.toFixed(0)} E`;
+        }
+
+        // Uppdatera insulininfo
+        function uppdateraInsulinInfo() {
+            const volym = parseFloat(document.getElementById('hundraInsulinVolym').value) || 0;
+            const styrka = parseFloat(document.getElementById('hundraInsulinStyrka').value) || 0;
+            const enheter = volym * styrka;
+            document.getElementById('hundraInsulinInfo').textContent = 
+                `En förpackning: ${enheter.toFixed(0)} E`;
+        }
+
+        // Växla mellan tabletter/insulin
+        function visaHundraTab(tab) {
+            if (tab === 'tabletter') {
+                document.getElementById('hundraTabletter').classList.add('aktiv');
+                document.getElementById('hundraInsulin').classList.remove('aktiv');
+                document.getElementById('hundraTabTabletter').classList.add('aktiv');
+                document.getElementById('hundraTabInsulin').classList.remove('aktiv');
+            } else {
+                document.getElementById('hundraTabletter').classList.remove('aktiv');
+                document.getElementById('hundraInsulin').classList.add('aktiv');
+                document.getElementById('hundraTabTabletter').classList.remove('aktiv');
+                document.getElementById('hundraTabInsulin').classList.add('aktiv');
+            }
+            document.getElementById('resultatHundra').style.display = 'none';
+        }
+
+        // Uppdatera intervall-input
+        function uppdateraIntervallInput() {
+            const typ = document.getElementById('intervallTyp').value;
+            
+            document.getElementById('intervallVeckorContainer').style.display = 'none';
+            document.getElementById('intervallManaderContainer').style.display = 'none';
+            document.getElementById('intervallInputContainer').style.display = 'block';
+            
+            if (typ === 'veckor') {
+                document.getElementById('intervallVeckorContainer').style.display = 'block';
+                document.getElementById('intervallInputContainer').style.display = 'none';
+                document.getElementById('intervallVarde').value = document.getElementById('intervallVeckor').value;
+            } else if (typ === 'manader') {
+                document.getElementById('intervallManaderContainer').style.display = 'block';
+                document.getElementById('intervallInputContainer').style.display = 'none';
+                document.getElementById('intervallVarde').value = document.getElementById('intervallManader').value;
+            }
+        }
+
+        function synkroniseraVarde() {
+            const typ = document.getElementById('intervallTyp').value;
+            if (typ === 'veckor') {
+                document.getElementById('intervallVarde').value = document.getElementById('intervallVeckor').value;
+            } else if (typ === 'manader') {
+                document.getElementById('intervallVarde').value = document.getElementById('intervallManader').value;
+            }
+        }
+
+        // Formatera datum
+        function formatDate(date) {
+            return date.toLocaleDateString('sv-SE', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        // BERÄKNINGAR (samma som förut)
+        function beraknaTabletter() {
+            const storlek = parseFloat(document.getElementById('tabletterStorlek').value);
+            const dygnsdos = parseFloat(document.getElementById('tabletterDygnsdos').value);
+            const datumStr = document.getElementById('tabletterDatum').value;
+            
+            if (!storlek || !dygnsdos || storlek <= 0 || dygnsdos <= 0) {
+                alert('Fyll i giltiga värden');
+                return;
+            }
+            
+            const datumDelar = datumStr.split('-');
+            const startDatum = new Date(datumDelar[0], datumDelar[1] - 1, datumDelar[2]);
+            
+            const dagar = storlek / dygnsdos * 0.67;
+            const nastaDatum = new Date(startDatum);
+            nastaDatum.setDate(startDatum.getDate() + Math.floor(dagar));
+            
+            const idag = new Date();
+            
+            document.getElementById('tabletterDagar').textContent = 
+                `${Math.ceil(dagar * 10) / 10} dagar (2/3 av tiden)`;
+            document.getElementById('tabletterDatumBox').textContent = formatDate(nastaDatum);
+            
             const statusDiv = document.getElementById('tabletterStatus');
             statusDiv.className = 'status-meddelande';
             
