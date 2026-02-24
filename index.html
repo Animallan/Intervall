@@ -5,15 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2/3 av tiden & 100-dagarsregeln - Farmaceutverktyg</title>
     <style>
+        /* Ljust läge (default) */
+        :root {
+            --bg-color: #f5f5f5;
+            --container-bg: white;
+            --kolumn-bg: #f8f9fa;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --border-color: #e0e0e0;
+            --input-bg: white;
+            --input-border: #ccc;
+            --info-bg: #e9ecef;
+            --info-text: #495057;
+            --status-gron-bg: #d4edda;
+            --status-gron-text: #155724;
+            --status-gron-border: #c3e6cb;
+            --status-rod-bg: #f8d7da;
+            --status-rod-text: #721c24;
+            --status-rod-border: #f5c6cb;
+            --hover-opacity: 0.9;
+        }
+
+        /* Mörkt läge */
+        body.morkt-lage {
+            --bg-color: #1a1a1a;
+            --container-bg: #2d2d2d;
+            --kolumn-bg: #3d3d3d;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --border-color: #404040;
+            --input-bg: #4d4d4d;
+            --input-border: #666;
+            --info-bg: #404040;
+            --info-text: #d0d0d0;
+            --status-gron-bg: #1e3a2a;
+            --status-gron-text: #a8e0b5;
+            --status-gron-border: #2a5a3a;
+            --status-rod-bg: #4a2a2a;
+            --status-rod-text: #f0b0b0;
+            --status-rod-border: #6a3a3a;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             max-width: 1400px;
             margin: 20px auto;
             padding: 20px;
-            background-color: #f5f5f5;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            transition: background-color 0.3s, color 0.3s;
         }
         .container {
-            background-color: white;
+            background-color: var(--container-bg);
             border-radius: 10px;
             padding: 25px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -23,9 +66,12 @@
             font-size: 24px;
             margin-top: 0;
             margin-bottom: 25px;
-            border-bottom: 2px solid #e0e0e0;
+            border-bottom: 2px solid var(--border-color);
             padding-bottom: 10px;
             text-align: center;
+        }
+        body.morkt-lage h1 {
+            color: #4a9eff;
         }
         .kolumner {
             display: flex;
@@ -34,10 +80,10 @@
         }
         .kolumn {
             flex: 1;
-            background-color: #f8f9fa;
+            background-color: var(--kolumn-bg);
             border-radius: 8px;
             padding: 20px;
-            border: 1px solid #e0e0e0;
+            border: 1px solid var(--border-color);
         }
         .kolumn h2 {
             color: #003b5c;
@@ -50,6 +96,9 @@
             align-items: center;
             gap: 8px;
         }
+        body.morkt-lage .kolumn h2 {
+            color: #4a9eff;
+        }
         .kolumn:first-child h2 { border-bottom-color: #003b5c; }
         .kolumn:nth-child(2) h2 { border-bottom-color: #2c7a4d; }
         .kolumn:nth-child(3) h2 { border-bottom-color: #b85c00; }
@@ -61,16 +110,18 @@
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
-            color: #333;
+            color: var(--text-primary);
             font-size: 14px;
         }
         input, select {
             width: 100%;
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--input-border);
             border-radius: 5px;
             font-size: 15px;
             box-sizing: border-box;
+            background-color: var(--input-bg);
+            color: var(--text-primary);
         }
         input:focus, select:focus {
             outline: 2px solid #003b5c;
@@ -79,10 +130,11 @@
         input[type="date"] {
             font-family: inherit;
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--input-border);
             border-radius: 5px;
             font-size: 15px;
-            background-color: white;
+            background-color: var(--input-bg);
+            color: var(--text-primary);
         }
         input[type="date"]::-webkit-calendar-picker-indicator {
             background-color: #003b5c;
@@ -106,12 +158,12 @@
         }
         .kolumn:nth-child(2) button { background-color: #2c7a4d; }
         .kolumn:nth-child(3) button { background-color: #b85c00; }
-        button:hover { opacity: 0.9; }
+        button:hover { opacity: var(--hover-opacity); }
         
         .resultat {
             margin-top: 20px;
             padding: 15px;
-            background-color: #e8f0fe;
+            background-color: var(--info-bg);
             border-radius: 5px;
             border-left: 5px solid;
             display: none;
@@ -126,13 +178,14 @@
             margin-bottom: 10px;
             padding-bottom: 8px;
             border-bottom: 1px dashed;
+            color: var(--text-primary);
         }
-        .kolumn:first-child .resultat-dagar { color: #003b5c; border-bottom-color: #003b5c; }
-        .kolumn:nth-child(2) .resultat-dagar { color: #2c7a4d; border-bottom-color: #2c7a4d; }
-        .kolumn:nth-child(3) .resultat-dagar { color: #b85c00; border-bottom-color: #b85c00; }
+        .kolumn:first-child .resultat-dagar { border-bottom-color: #003b5c; }
+        .kolumn:nth-child(2) .resultat-dagar { border-bottom-color: #2c7a4d; }
+        .kolumn:nth-child(3) .resultat-dagar { border-bottom-color: #b85c00; }
         
         .resultat-datum-box {
-            background-color: white;
+            background-color: var(--container-bg);
             padding: 12px;
             border-radius: 5px;
             text-align: center;
@@ -145,7 +198,6 @@
         .kolumn:nth-child(2) .resultat-datum-box { color: #2c7a4d; border-color: #2c7a4d; }
         .kolumn:nth-child(3) .resultat-datum-box { color: #b85c00; border-color: #b85c00; }
         
-        /* Statusmeddelanden */
         .status-meddelande {
             padding: 10px;
             border-radius: 5px;
@@ -155,41 +207,42 @@
             font-size: 15px;
         }
         .status-gron {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+            background-color: var(--status-gron-bg);
+            color: var(--status-gron-text);
+            border: 1px solid var(--status-gron-border);
         }
         .status-rod {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            background-color: var(--status-rod-bg);
+            color: var(--status-rod-text);
+            border: 1px solid var(--status-rod-border);
         }
         
         .forpackning {
             font-size: 13px;
             margin-top: 8px;
             text-align: center;
+            color: var(--text-secondary);
         }
         .dag-idag {
             font-size: 13px;
-            color: #666;
+            color: var(--text-secondary);
             margin-top: 10px;
             text-align: center;
-            border-top: 1px solid #dee2e6;
+            border-top: 1px solid var(--border-color);
             padding-top: 8px;
         }
         .enheter-info {
-            background-color: #e9ecef;
+            background-color: var(--info-bg);
             padding: 8px;
             border-radius: 4px;
             margin: 10px 0;
             font-size: 14px;
             text-align: center;
-            color: #495057;
+            color: var(--info-text);
         }
         .datum-info {
             font-size: 13px;
-            color: #666;
+            color: var(--text-secondary);
             margin-top: 5px;
             font-style: italic;
         }
@@ -205,7 +258,7 @@
         .hundra-sektion {
             margin-top: 30px;
             padding: 25px;
-            background-color: #f3e5f5;
+            background-color: var(--kolumn-bg);
             border-radius: 10px;
             border: 2px solid #9c27b0;
         }
@@ -240,9 +293,9 @@
             display: block;
         }
         .rekommendation {
-            background-color: #fff3cd;
-            border: 1px solid #ffeeba;
-            color: #856404;
+            background-color: var(--status-gron-bg);
+            border: 1px solid var(--status-gron-border);
+            color: var(--status-gron-text);
             padding: 15px;
             border-radius: 5px;
             margin: 15px 0;
@@ -250,25 +303,41 @@
             text-align: center;
             font-size: 16px;
         }
-        .rekommendation.gron {
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-            color: #155724;
-        }
         .rekommendation.rod {
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-            color: #721c24;
+            background-color: var(--status-rod-bg);
+            border-color: var(--status-rod-border);
+            color: var(--status-rod-text);
         }
         .info-text {
             font-size: 13px;
-            color: #666;
+            color: var(--text-secondary);
             font-style: italic;
             margin-top: 3px;
+        }
+        
+        /* Toggle-knapp för mörkt läge */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--container-bg);
+            border: 2px solid #003b5c;
+            border-radius: 30px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--text-primary);
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .theme-toggle:hover {
+            opacity: 0.8;
         }
     </style>
 </head>
 <body>
+    <div class="theme-toggle" onclick="toggleMorktLage()">🌙 Mörkt läge</div>
+
     <div class="container">
         <h1>💊 Läkemedelsberäkning - 2/3-regeln & 100-dagarsregeln</h1>
         
@@ -404,7 +473,7 @@
         <!-- 100-dagarsregeln -->
         <div class="hundra-sektion">
             <h2>📏 100-dagarsregeln</h2>
-            <p style="margin-bottom: 20px; color: #333;">Räkna ut hur många förpackningar som får expedieras (max 100 dagars behandling)</p>
+            <p style="margin-bottom: 20px; color: var(--text-secondary);">Räkna ut hur många förpackningar som får expedieras (max 100 dagars behandling)</p>
             
             <div class="hundra-valjare">
                 <button id="hundraTabTabletter" class="aktiv" onclick="visaHundraTab('tabletter')">💊 Tabletter</button>
@@ -467,12 +536,23 @@
             
             <div id="resultatHundra" style="margin-top: 25px; display: none;">
                 <div id="hundraRekommendation" class="rekommendation"></div>
-                <div id="hundraDetaljer" style="text-align: center; color: #666; margin-top: 10px;"></div>
+                <div id="hundraDetaljer" style="text-align: center; color: var(--text-secondary); margin-top: 10px;"></div>
             </div>
         </div>
     </div>
 
     <script>
+        // Mörkt läge toggle
+        function toggleMorktLage() {
+            document.body.classList.toggle('morkt-lage');
+            const toggleBtn = document.querySelector('.theme-toggle');
+            if (document.body.classList.contains('morkt-lage')) {
+                toggleBtn.innerHTML = '☀️ Ljust läge';
+            } else {
+                toggleBtn.innerHTML = '🌙 Mörkt läge';
+            }
+        }
+
         // Initiera vid sidladdning
         window.onload = function() {
             sattDagensDatum();
@@ -561,7 +641,7 @@
             }
         }
 
-        // Formatera datum
+        // Formatera datum (utan tidszonskorrigering)
         function formatDate(date) {
             return date.toLocaleDateString('sv-SE', {
                 year: 'numeric',
@@ -582,8 +662,9 @@
                 return;
             }
             
-            const startDatum = new Date(datumStr);
-            startDatum.setDate(startDatum.getDate() + 1);
+            // Skapa datum utan tidszonsproblem
+            const datumDelar = datumStr.split('-');
+            const startDatum = new Date(datumDelar[0], datumDelar[1] - 1, datumDelar[2]);
             
             const dagar = storlek / dygnsdos * 0.67;
             const nastaDatum = new Date(startDatum);
@@ -626,8 +707,8 @@
                 return;
             }
             
-            const startDatum = new Date(datumStr);
-            startDatum.setDate(startDatum.getDate() + 1);
+            const datumDelar = datumStr.split('-');
+            const startDatum = new Date(datumDelar[0], datumDelar[1] - 1, datumDelar[2]);
             
             const totalaEnheter = volym * styrka;
             const dagar = totalaEnheter / dygnsdos * 0.67;
@@ -640,7 +721,6 @@
                 `${Math.ceil(dagar * 10) / 10} dagar (2/3 av tiden)`;
             document.getElementById('vatskaDatumBox').textContent = formatDate(nastaDatum);
             
-            // Status för förmån
             const statusDiv = document.getElementById('vatskaStatus');
             statusDiv.className = 'status-meddelande';
             
@@ -673,8 +753,8 @@
                 antal = parseInt(document.getElementById('intervallManader').value);
             }
             
-            const startDatum = new Date(startDatumStr);
-            startDatum.setDate(startDatum.getDate() + 1);
+            const datumDelar = startDatumStr.split('-');
+            const startDatum = new Date(datumDelar[0], datumDelar[1] - 1, datumDelar[2]);
             
             const nastaDatum = new Date(startDatum);
             if (typ === 'dagar') {
@@ -692,7 +772,6 @@
             document.getElementById('intervallDagar').textContent = `Intervall: ${intervallText}`;
             document.getElementById('intervallDatumBox').textContent = formatDate(nastaDatum);
             
-            // Status för expeditionsintervall
             const statusDiv = document.getElementById('intervallStatus');
             statusDiv.className = 'status-meddelande';
             
