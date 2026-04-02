@@ -24,7 +24,6 @@
             --status-rod-text: #721c24;
             --status-rod-border: #f5c6cb;
             --hover-opacity: 0.9;
-            /* Nya ljusare blå färger */
             --tablett-farg: #4a9eff;
             --tablett-mork: #2c7be5;
         }
@@ -98,7 +97,6 @@
             align-items: center;
             gap: 8px;
         }
-        /* Uppdaterade färger - ljusare blå för första kolumnen */
         .kolumn:first-child h2 { 
             color: var(--tablett-farg);
             border-bottom-color: var(--tablett-farg);
@@ -181,7 +179,6 @@
             cursor: pointer;
             filter: invert(1);
         }
-        /* Knappfärger */
         .kolumn:first-child button { 
             background-color: var(--tablett-farg);
         }
@@ -478,7 +475,7 @@
                 </div>
             </div>
             
-            <!-- Kolumn 3: Expeditionsintervall -->
+            <!-- Kolumn 3: Expeditionsintervall (UPPDATERAD) -->
             <div class="kolumn">
                 <h2>⏱️ Expeditionsintervall</h2>
                 
@@ -509,9 +506,25 @@
                     <label for="intervallVeckor">Välj antal veckor:</label>
                     <select id="intervallVeckor" onchange="synkroniseraVarde()">
                         <option value="1">1 vecka</option>
-                        <option value="2" selected>2 veckor</option>
+                        <option value="2">2 veckor</option>
                         <option value="3">3 veckor</option>
                         <option value="4">4 veckor</option>
+                        <option value="5">5 veckor</option>
+                        <option value="6">6 veckor</option>
+                        <option value="7">7 veckor</option>
+                        <option value="8">8 veckor</option>
+                        <option value="9">9 veckor</option>
+                        <option value="10">10 veckor</option>
+                        <option value="11">11 veckor</option>
+                        <option value="12">12 veckor</option>
+                        <option value="13">13 veckor</option>
+                        <option value="14">14 veckor</option>
+                        <option value="15">15 veckor</option>
+                        <option value="16">16 veckor</option>
+                        <option value="17">17 veckor</option>
+                        <option value="18">18 veckor</option>
+                        <option value="19">19 veckor</option>
+                        <option value="20">20 veckor</option>
                     </select>
                 </div>
                 
@@ -521,7 +534,15 @@
                         <option value="1">1 månad</option>
                         <option value="2">2 månader</option>
                         <option value="3">3 månader</option>
+                        <option value="4">4 månader</option>
+                        <option value="5">5 månader</option>
                         <option value="6">6 månader</option>
+                        <option value="7">7 månader</option>
+                        <option value="8">8 månader</option>
+                        <option value="9">9 månader</option>
+                        <option value="10">10 månader</option>
+                        <option value="11">11 månader</option>
+                        <option value="12">12 månader</option>
                     </select>
                 </div>
                 
@@ -620,18 +641,15 @@
             }
         }
 
-        // Sätt datum till idag
         function sattTillIdag(faltId) {
             const idag = new Date();
             const ar = idag.getFullYear();
             const manad = (idag.getMonth() + 1).toString().padStart(2, '0');
             const dag = idag.getDate().toString().padStart(2, '0');
             const datumString = `${ar}-${manad}-${dag}`;
-            
             document.getElementById(faltId).value = datumString;
         }
 
-        // Initiera vid sidladdning
         window.onload = function() {
             sattTillIdag('tabletterDatum');
             sattTillIdag('vatskaDatum');
@@ -646,25 +664,20 @@
             document.getElementById('hundraInsulinStyrka').addEventListener('input', uppdateraInsulinInfo);
         };
 
-        // Uppdatera enheter display
         function uppdateraEnheterDisplay() {
             const volym = parseFloat(document.getElementById('vatskaVolym').value) || 0;
             const styrka = parseFloat(document.getElementById('vatskaStyrka').value) || 0;
             const enheter = volym * styrka;
-            document.getElementById('vatskaEnheterDisplay').textContent = 
-                `Totala enheter: ${enheter.toFixed(0)} E`;
+            document.getElementById('vatskaEnheterDisplay').textContent = `Totala enheter: ${enheter.toFixed(0)} E`;
         }
 
-        // Uppdatera insulininfo
         function uppdateraInsulinInfo() {
             const volym = parseFloat(document.getElementById('hundraInsulinVolym').value) || 0;
             const styrka = parseFloat(document.getElementById('hundraInsulinStyrka').value) || 0;
             const enheter = volym * styrka;
-            document.getElementById('hundraInsulinInfo').textContent = 
-                `En förpackning: ${enheter.toFixed(0)} E`;
+            document.getElementById('hundraInsulinInfo').textContent = `En förpackning: ${enheter.toFixed(0)} E`;
         }
 
-        // Växla mellan tabletter/insulin
         function visaHundraTab(tab) {
             if (tab === 'tabletter') {
                 document.getElementById('hundraTabletter').classList.add('aktiv');
@@ -680,7 +693,6 @@
             document.getElementById('resultatHundra').style.display = 'none';
         }
 
-        // Uppdatera intervall-input
         function uppdateraIntervallInput() {
             const typ = document.getElementById('intervallTyp').value;
             
@@ -708,7 +720,6 @@
             }
         }
 
-        // Formatera datum
         function formatDate(date) {
             return date.toLocaleDateString('sv-SE', {
                 year: 'numeric',
@@ -717,7 +728,6 @@
             });
         }
 
-        // BERÄKNINGAR (samma som förut)
         function beraknaTabletter() {
             const storlek = parseFloat(document.getElementById('tabletterStorlek').value);
             const dygnsdos = parseFloat(document.getElementById('tabletterDygnsdos').value);
@@ -730,20 +740,16 @@
             
             const datumDelar = datumStr.split('-');
             const startDatum = new Date(datumDelar[0], datumDelar[1] - 1, datumDelar[2]);
-            
             const dagar = storlek / dygnsdos * 0.67;
             const nastaDatum = new Date(startDatum);
             nastaDatum.setDate(startDatum.getDate() + Math.floor(dagar));
-            
             const idag = new Date();
             
-            document.getElementById('tabletterDagar').textContent = 
-                `${Math.ceil(dagar * 10) / 10} dagar (2/3 av tiden)`;
+            document.getElementById('tabletterDagar').textContent = `${Math.ceil(dagar * 10) / 10} dagar (2/3 av tiden)`;
             document.getElementById('tabletterDatumBox').textContent = formatDate(nastaDatum);
             
             const statusDiv = document.getElementById('tabletterStatus');
             statusDiv.className = 'status-meddelande';
-            
             if (nastaDatum <= idag) {
                 statusDiv.classList.add('status-gron');
                 statusDiv.innerHTML = '✅ OK inom förmån';
@@ -752,11 +758,8 @@
                 statusDiv.innerHTML = '❌ För tidigt inom förmån';
             }
             
-            document.getElementById('tabletterInfo').textContent = 
-                `${storlek} tabletter, ${dygnsdos} st/dag`;
-            document.getElementById('tabletterIdag').innerHTML = 
-                `Hämtades: ${formatDate(startDatum)}<br>Idag: ${formatDate(idag)}`;
-            
+            document.getElementById('tabletterInfo').textContent = `${storlek} tabletter, ${dygnsdos} st/dag`;
+            document.getElementById('tabletterIdag').innerHTML = `Hämtades: ${formatDate(startDatum)}<br>Idag: ${formatDate(idag)}`;
             document.getElementById('resultatTabletter').classList.add('visa');
         }
 
@@ -773,21 +776,17 @@
             
             const datumDelar = datumStr.split('-');
             const startDatum = new Date(datumDelar[0], datumDelar[1] - 1, datumDelar[2]);
-            
             const totalaEnheter = volym * styrka;
             const dagar = totalaEnheter / dygnsdos * 0.67;
             const nastaDatum = new Date(startDatum);
             nastaDatum.setDate(startDatum.getDate() + Math.floor(dagar));
-            
             const idag = new Date();
             
-            document.getElementById('vatskaDagar').textContent = 
-                `${Math.ceil(dagar * 10) / 10} dagar (2/3 av tiden)`;
+            document.getElementById('vatskaDagar').textContent = `${Math.ceil(dagar * 10) / 10} dagar (2/3 av tiden)`;
             document.getElementById('vatskaDatumBox').textContent = formatDate(nastaDatum);
             
             const statusDiv = document.getElementById('vatskaStatus');
             statusDiv.className = 'status-meddelande';
-            
             if (nastaDatum <= idag) {
                 statusDiv.classList.add('status-gron');
                 statusDiv.innerHTML = '✅ OK inom förmån';
@@ -796,11 +795,8 @@
                 statusDiv.innerHTML = '❌ För tidigt inom förmån';
             }
             
-            document.getElementById('vatskaInfo').textContent = 
-                `${totalaEnheter.toFixed(0)} E totalt, ${dygnsdos} E/dag`;
-            document.getElementById('vatskaIdag').innerHTML = 
-                `Hämtades: ${formatDate(startDatum)}<br>Idag: ${formatDate(idag)}`;
-            
+            document.getElementById('vatskaInfo').textContent = `${totalaEnheter.toFixed(0)} E totalt, ${dygnsdos} E/dag`;
+            document.getElementById('vatskaIdag').innerHTML = `Hämtades: ${formatDate(startDatum)}<br>Idag: ${formatDate(idag)}`;
             document.getElementById('resultatVatska').classList.add('visa');
         }
 
@@ -819,7 +815,6 @@
             
             const datumDelar = startDatumStr.split('-');
             const startDatum = new Date(datumDelar[0], datumDelar[1] - 1, datumDelar[2]);
-            
             const nastaDatum = new Date(startDatum);
             if (typ === 'dagar') {
                 nastaDatum.setDate(startDatum.getDate() + antal);
@@ -830,15 +825,13 @@
             }
             
             const idag = new Date();
-            const intervallText = typ === 'dagar' ? `${antal} dagar` : 
-                                 typ === 'veckor' ? `${antal} veckor` : `${antal} månader`;
+            const intervallText = typ === 'dagar' ? `${antal} dagar` : typ === 'veckor' ? `${antal} veckor` : `${antal} månader`;
             
             document.getElementById('intervallDagar').textContent = `Intervall: ${intervallText}`;
             document.getElementById('intervallDatumBox').textContent = formatDate(nastaDatum);
             
             const statusDiv = document.getElementById('intervallStatus');
             statusDiv.className = 'status-meddelande';
-            
             if (nastaDatum <= idag) {
                 statusDiv.classList.add('status-gron');
                 statusDiv.innerHTML = '✅ OK inom expeditionsintervall';
@@ -848,13 +841,10 @@
             }
             
             document.getElementById('intervallInfo').textContent = `Från ${formatDate(startDatum)}`;
-            document.getElementById('intervallIdag').innerHTML = 
-                `Start: ${formatDate(startDatum)}<br>Idag: ${formatDate(idag)}`;
-            
+            document.getElementById('intervallIdag').innerHTML = `Start: ${formatDate(startDatum)}<br>Idag: ${formatDate(idag)}`;
             document.getElementById('resultatIntervall').classList.add('visa');
         }
 
-        // 100-dagarsberäkningar
         function beraknaHundraTabletter() {
             const perForp = parseFloat(document.getElementById('hundraTabletterAntal').value);
             const dygnsdos = parseFloat(document.getElementById('hundraTabletterDos').value);
