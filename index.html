@@ -431,7 +431,7 @@
                 </div>
             </div>
             
-            <!-- Kolumn 2: Vätska/insulin -->
+            <!-- Kolumn 2: Vätska/insulin (UPPDATERAD: Stöd för uträkning) -->
             <div class="kolumn">
                 <h2>💉 Vätska & insulin</h2>
                 
@@ -451,8 +451,8 @@
                 
                 <div class="inputgrupp">
                     <label for="vatskaDygnsdos">Dygnsdos (enheter):</label>
-                    <input type="number" id="vatskaDygnsdos" min="0.1" value="" step="0.1" placeholder="Ange dygnsdos">
-                    <div class="info-text">Fyll i patientens dygnsdos i enheter</div>
+                    <input type="text" id="vatskaDygnsdos" value="" placeholder="t.ex. 50 eller 25+25 eller 4+7+5+1">
+                    <div class="info-text">Ange total mängd ELLER summa med plus (t.ex. 25+25)</div>
                 </div>
                 
                 <div class="inputgrupp">
@@ -728,6 +728,28 @@
             });
         }
 
+        // Ny hjälpfunktion för att tolka inmatning av dos (tex "25+25" eller "50")
+        function tolkaDos(dosText) {
+            if (!dosText || dosText.trim() === "") return NaN;
+            // Ta bort mellanslag
+            dosText = dosText.replace(/\s/g, '');
+            // Kolla om det innehåller ett plustecken
+            if (dosText.includes('+')) {
+                // Dela upp på plustecken och summera
+                const delar = dosText.split('+');
+                let summa = 0;
+                for (let del of delar) {
+                    const nummer = parseFloat(del);
+                    if (isNaN(nummer)) return NaN;
+                    summa += nummer;
+                }
+                return summa;
+            } else {
+                // Vanlig siffra
+                return parseFloat(dosText);
+            }
+        }
+
         function beraknaTabletter() {
             const storlek = parseFloat(document.getElementById('tabletterStorlek').value);
             const dygnsdos = parseFloat(document.getElementById('tabletterDygnsdos').value);
@@ -766,11 +788,14 @@
         function beraknaVatska() {
             const volym = parseFloat(document.getElementById('vatskaVolym').value);
             const styrka = parseFloat(document.getElementById('vatskaStyrka').value);
-            const dygnsdos = parseFloat(document.getElementById('vatskaDygnsdos').value);
+            const dosText = document.getElementById('vatskaDygnsdos').value;
             const datumStr = document.getElementById('vatskaDatum').value;
             
-            if (!volym || !styrka || !dygnsdos) {
-                alert('Fyll i alla värden, inklusive dygnsdos i enheter');
+            // Tolka dosen (stöd för både siffra och summa)
+            const dygnsdos = tolkaDos(dosText);
+            
+            if (!volym || !styrka || isNaN(dygnsdos) || dygnsdos <= 0) {
+                alert('Fyll i alla värden, inklusive en giltig dygnsdos (t.ex. 50 eller 25+25)');
                 return;
             }
             
